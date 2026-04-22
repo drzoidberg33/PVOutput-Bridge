@@ -1,0 +1,7 @@
+upload_now:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: pvoutput_bridge

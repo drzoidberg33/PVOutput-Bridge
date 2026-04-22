@@ -1,0 +1,14 @@
+{
+  "domain": "pvoutput_bridge",
+  "name": "PVOutput Bridge",
+  "version": "0.1.0",
+  "documentation": "https://github.com/REPLACE_ME/pvoutput-bridge",
+  "issue_tracker": "https://github.com/REPLACE_ME/pvoutput-bridge/issues",
+  "codeowners": ["@REPLACE_ME"],
+  "iot_class": "cloud_push",
+  "integration_type": "service",
+  "config_flow": true,
+  "dependencies": [],
+  "requirements": [],
+  "loggers": ["custom_components.pvoutput_bridge"]
+}

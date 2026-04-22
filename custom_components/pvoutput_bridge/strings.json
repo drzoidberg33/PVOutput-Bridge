@@ -1,0 +1,135 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to PVOutput.org",
+        "description": "Enter your PVOutput API key and System ID. Both can be found on your PVOutput account settings page.",
+        "data": {
+          "api_key": "API key",
+          "system_id": "System ID"
+        },
+        "data_description": {
+          "api_key": "Your personal PVOutput API key (not the System ID).",
+          "system_id": "The numeric ID of the PVOutput system you want to upload to."
+        }
+      },
+      "entities": {
+        "title": "Select source entities",
+        "description": "Choose the Home Assistant entities that provide your PV data. Only power generation is required; all other fields are optional. Values are converted to PVOutput units automatically.",
+        "data": {
+          "power_generation": "Power generation",
+          "energy_generation": "Energy generation (today)",
+          "power_consumption": "Power consumption",
+          "energy_consumption": "Energy consumption (today)",
+          "temperature": "Temperature",
+          "voltage": "Voltage",
+          "interval_minutes": "Upload interval (minutes)",
+          "cumulative": "Lifetime energy counters",
+          "net": "Net energy (import/export)"
+        },
+        "data_description": {
+          "power_generation": "Instantaneous PV power output. Any unit that Home Assistant recognises as power (W, kW, MW).",
+          "energy_generation": "Energy generated so far today. Any unit that Home Assistant recognises as energy (Wh, kWh, MWh).",
+          "power_consumption": "Instantaneous household power consumption.",
+          "energy_consumption": "Household energy consumed so far today.",
+          "temperature": "Panel or ambient temperature.",
+          "voltage": "DC or AC voltage reading from the inverter.",
+          "interval_minutes": "Must match the status interval configured on your PVOutput system.",
+          "cumulative": "Enable if the energy values are lifetime totals rather than daily resets.",
+          "net": "Enable if the energy values represent net import/export rather than gross generation/consumption."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate PVOutput Bridge",
+        "description": "The API key for PVOutput system {system_id} is no longer accepted. Enter a new API key to reconnect. The System ID cannot be changed here — if you need to change it, remove and re-add the integration.",
+        "data": {
+          "api_key": "API key"
+        },
+        "data_description": {
+          "api_key": "Your current PVOutput API key (visit your PVOutput account settings to regenerate it if needed)."
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid API key or System ID.",
+      "cannot_connect": "Could not reach pvoutput.org. Check your internet connection and try again."
+    },
+    "abort": {
+      "already_configured": "This PVOutput system is already configured.",
+      "reauth_successful": "PVOutput Bridge re-authenticated successfully."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "PVOutput Bridge options",
+        "description": "Update the entities and upload options used by this PVOutput system.",
+        "data": {
+          "power_generation": "Power generation",
+          "energy_generation": "Energy generation (today)",
+          "power_consumption": "Power consumption",
+          "energy_consumption": "Energy consumption (today)",
+          "temperature": "Temperature",
+          "voltage": "Voltage",
+          "interval_minutes": "Upload interval (minutes)",
+          "cumulative": "Lifetime energy counters",
+          "net": "Net energy (import/export)"
+        },
+        "data_description": {
+          "power_generation": "Instantaneous PV power output.",
+          "energy_generation": "Energy generated so far today.",
+          "power_consumption": "Instantaneous household power consumption.",
+          "energy_consumption": "Household energy consumed so far today.",
+          "temperature": "Panel or ambient temperature.",
+          "voltage": "DC or AC voltage reading from the inverter.",
+          "interval_minutes": "Must match the status interval configured on your PVOutput system.",
+          "cumulative": "Enable if the energy values are lifetime totals rather than daily resets.",
+          "net": "Enable if the energy values represent net import/export rather than gross generation/consumption."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "last_upload": {
+        "name": "Last upload"
+      },
+      "last_status": {
+        "name": "Last status",
+        "state": {
+          "ok": "OK",
+          "error": "Error"
+        }
+      },
+      "rate_limit_remaining": {
+        "name": "Rate limit remaining"
+      }
+    }
+  },
+  "services": {
+    "upload_now": {
+      "name": "Upload now",
+      "description": "Immediately upload the current PV status to pvoutput.org instead of waiting for the next scheduled interval.",
+      "fields": {
+        "config_entry_id": {
+          "name": "PVOutput Bridge entry",
+          "description": "The configured PVOutput system to upload to."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_config_entry": {
+      "message": "The selected config entry is not a PVOutput Bridge entry."
+    },
+    "config_entry_not_loaded": {
+      "message": "The selected PVOutput Bridge entry is not loaded."
+    }
+  },
+  "issues": {
+    "rate_limit_exceeded": {
+      "title": "PVOutput rate limit exceeded",
+      "description": "The hourly PVOutput API rate limit has been exceeded for {entry_title}. Uploads will retry automatically once the limit resets.\n\nTo avoid this in future, increase the upload interval in the integration's options, or upgrade to a PVOutput donation account for higher limits.\n\nThis issue will clear itself once the next upload succeeds."
+    }
+  }
+}
