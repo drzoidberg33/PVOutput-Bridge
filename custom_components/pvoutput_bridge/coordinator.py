@@ -144,7 +144,7 @@ class PVOutputBridgeCoordinator(DataUpdateCoordinator[UploadResult]):
             return None
 
         return StatusPayload(
-            timestamp=self._aligned_now(),
+            timestamp=dt_util.now(),
             power_generation_w=power_gen_w,
             energy_generation_wh=self._read_converted(
                 options.get(CONF_ENERGY_GENERATION),
@@ -173,20 +173,6 @@ class PVOutputBridgeCoordinator(DataUpdateCoordinator[UploadResult]):
             ),
             cumulative=options.get(CONF_CUMULATIVE, DEFAULT_CUMULATIVE),
             net=options.get(CONF_NET, DEFAULT_NET),
-        )
-
-    def _aligned_now(self) -> datetime:
-        """Round the current local time to the nearest status-interval boundary."""
-        now = dt_util.now()
-        interval_seconds = self._interval_minutes * 60
-        seconds_today = now.hour * 3600 + now.minute * 60 + now.second
-        aligned = round(seconds_today / interval_seconds) * interval_seconds
-        aligned = min(aligned, 24 * 3600 - interval_seconds)
-        return now.replace(
-            hour=aligned // 3600,
-            minute=(aligned % 3600) // 60,
-            second=0,
-            microsecond=0,
         )
 
     def _read_converted(
