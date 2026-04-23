@@ -25,8 +25,44 @@ uploads live status data to [pvoutput.org](https://pvoutput.org).
 
 ## Installation
 
-Installation instructions will be added once the integration is published to
-HACS.
+### Step 1: Add the Custom Repository in HACS
+
+1. In your Home Assistant sidebar, select the **HACS** icon.
+2. Click the **three-dot menu (⋮)** in the top-right corner of the HACS dashboard.
+3. Select **Custom repositories**.
+4. In the dialog that appears:
+   - **Repository URL:** `https://github.com/drzoidberg33/PVOutput-Bridge`
+   - **Type:** Select `Integration` from the dropdown
+5. Click **Add**.
+6. Close the dialog once the repository has been added.
+
+---
+
+### Step 2: Install the Integration
+
+1. In the HACS dashboard, search for **PVOutput Bridge** using the search bar at the top.
+2. Click on **PVOutput Bridge** in the results to open its details page.
+3. Click the **Download** button in the bottom-right corner.
+4. When prompted, confirm by clicking **Download** again.
+
+---
+
+### Step 3: Restart Home Assistant
+
+After the download completes, you **must restart Home Assistant** for the integration to be loaded:
+
+1. Go to **Settings → System → Restart**.
+2. Click **Restart** and wait for Home Assistant to come back online.
+
+---
+
+### Step 4: Add the Integration
+
+1. Go to **Settings → Devices & Services**.
+2. Click **+ Add Integration** in the bottom-right corner.
+3. Search for **PVOutput Bridge**.
+4. Follow the on-screen configuration steps to complete the setup.
+
 
 ## Status
 
