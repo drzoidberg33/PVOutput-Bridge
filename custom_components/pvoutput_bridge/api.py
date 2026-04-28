@@ -40,6 +40,10 @@ class StatusPayload:
     energy_consumption_wh: float | None = None
     temperature_c: float | None = None
     voltage_v: float | None = None
+    battery_power_w: float | None = None
+    battery_soc_percent: float | None = None
+    battery_lifetime_charge_wh: float | None = None
+    battery_lifetime_discharge_wh: float | None = None
     cumulative: bool = False
     net: bool = False
 
@@ -61,6 +65,15 @@ class StatusPayload:
             params["v5"] = f"{self.temperature_c:.1f}"
         if self.voltage_v is not None:
             params["v6"] = f"{self.voltage_v:.1f}"
+        # PVOutput ignores b2/b4/b5 unless b1 is also present.
+        if self.battery_power_w is not None:
+            params["b1"] = str(int(round(self.battery_power_w)))
+            if self.battery_soc_percent is not None:
+                params["b2"] = f"{self.battery_soc_percent:.1f}"
+            if self.battery_lifetime_charge_wh is not None:
+                params["b4"] = str(int(round(self.battery_lifetime_charge_wh)))
+            if self.battery_lifetime_discharge_wh is not None:
+                params["b5"] = str(int(round(self.battery_lifetime_discharge_wh)))
         if self.cumulative:
             params["c1"] = "1"
         if self.net:

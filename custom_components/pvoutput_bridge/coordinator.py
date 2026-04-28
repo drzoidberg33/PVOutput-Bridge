@@ -38,6 +38,10 @@ from .api import (
     StatusPayload,
 )
 from .const import (
+    CONF_BATTERY_LIFETIME_CHARGE,
+    CONF_BATTERY_LIFETIME_DISCHARGE,
+    CONF_BATTERY_POWER,
+    CONF_BATTERY_SOC,
     CONF_CUMULATIVE,
     CONF_ENERGY_CONSUMPTION,
     CONF_ENERGY_GENERATION,
@@ -171,9 +175,40 @@ class PVOutputBridgeCoordinator(DataUpdateCoordinator[UploadResult]):
                 ElectricPotentialConverter,
                 UnitOfElectricPotential.VOLT,
             ),
+            battery_power_w=self._read_converted(
+                options.get(CONF_BATTERY_POWER),
+                PowerConverter,
+                UnitOfPower.WATT,
+            ),
+            battery_soc_percent=self._read_numeric(options.get(CONF_BATTERY_SOC)),
+            battery_lifetime_charge_wh=self._read_converted(
+                options.get(CONF_BATTERY_LIFETIME_CHARGE),
+                EnergyConverter,
+                UnitOfEnergy.WATT_HOUR,
+            ),
+            battery_lifetime_discharge_wh=self._read_converted(
+                options.get(CONF_BATTERY_LIFETIME_DISCHARGE),
+                EnergyConverter,
+                UnitOfEnergy.WATT_HOUR,
+            ),
             cumulative=options.get(CONF_CUMULATIVE, DEFAULT_CUMULATIVE),
             net=options.get(CONF_NET, DEFAULT_NET),
         )
+
+    def _read_numeric(self, entity_id: str | None) -> float | None:
+        """Read an entity's numeric state without unit conversion."""
+        if not entity_id:
+            return None
+        state = self.hass.states.get(entity_id)
+        if state is None or state.state in (STATE_UNKNOWN, STATE_UNAVAILABLE):
+            return None
+        try:
+            return float(state.state)
+        except (TypeError, ValueError):
+            _LOGGER.warning(
+                "Entity %s has non-numeric state %r; skipping", entity_id, state.state
+            )
+            return None
 
     def _read_converted(
         self,

@@ -23,6 +23,10 @@
           "energy_consumption": "Energy consumption (today)",
           "temperature": "Temperature",
           "voltage": "Voltage",
+          "battery_power": "Battery power",
+          "battery_soc": "Battery state of charge",
+          "battery_lifetime_charge": "Battery lifetime charge",
+          "battery_lifetime_discharge": "Battery lifetime discharge",
           "interval_minutes": "Upload interval (minutes)",
           "cumulative": "Lifetime energy counters",
           "net": "Net energy (import/export)"
@@ -34,6 +38,10 @@
           "energy_consumption": "Household energy consumed so far today.",
           "temperature": "Panel or ambient temperature.",
           "voltage": "DC or AC voltage reading from the inverter.",
+          "battery_power": "Signed battery power: positive when charging, negative when discharging. Required to upload any other battery data. PVOutput donation accounts only.",
+          "battery_soc": "Battery state of charge as a percentage.",
+          "battery_lifetime_charge": "Cumulative energy charged into the battery over its lifetime.",
+          "battery_lifetime_discharge": "Cumulative energy discharged from the battery over its lifetime.",
           "interval_minutes": "Must match the status interval configured on your PVOutput system.",
           "cumulative": "Enable if the energy values are lifetime totals rather than daily resets.",
           "net": "Enable if the energy values represent net import/export rather than gross generation/consumption."
@@ -71,6 +79,10 @@
           "energy_consumption": "Energy consumption (today)",
           "temperature": "Temperature",
           "voltage": "Voltage",
+          "battery_power": "Battery power",
+          "battery_soc": "Battery state of charge",
+          "battery_lifetime_charge": "Battery lifetime charge",
+          "battery_lifetime_discharge": "Battery lifetime discharge",
           "interval_minutes": "Upload interval (minutes)",
           "cumulative": "Lifetime energy counters",
           "net": "Net energy (import/export)"
@@ -82,6 +94,10 @@
           "energy_consumption": "Household energy consumed so far today.",
           "temperature": "Panel or ambient temperature.",
           "voltage": "DC or AC voltage reading from the inverter.",
+          "battery_power": "Signed battery power: positive when charging, negative when discharging. Required to upload any other battery data. PVOutput donation accounts only.",
+          "battery_soc": "Battery state of charge as a percentage.",
+          "battery_lifetime_charge": "Cumulative energy charged into the battery over its lifetime.",
+          "battery_lifetime_discharge": "Cumulative energy discharged from the battery over its lifetime.",
           "interval_minutes": "Must match the status interval configured on your PVOutput system.",
           "cumulative": "Enable if the energy values are lifetime totals rather than daily resets.",
           "net": "Enable if the energy values represent net import/export rather than gross generation/consumption."

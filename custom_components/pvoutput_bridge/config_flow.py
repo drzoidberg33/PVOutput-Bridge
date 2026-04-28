@@ -21,6 +21,10 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .api import PVOutputAuthError, PVOutputClient, PVOutputError
 from .const import (
     ALLOWED_INTERVALS,
+    CONF_BATTERY_LIFETIME_CHARGE,
+    CONF_BATTERY_LIFETIME_DISCHARGE,
+    CONF_BATTERY_POWER,
+    CONF_BATTERY_SOC,
     CONF_CUMULATIVE,
     CONF_ENERGY_CONSUMPTION,
     CONF_ENERGY_GENERATION,
@@ -87,6 +91,20 @@ def _entity_options_schema(defaults: Mapping[str, Any]) -> vol.Schema:
             vol.Optional(
                 CONF_VOLTAGE, **_suggested(CONF_VOLTAGE)
             ): _sensor_selector("voltage"),
+            vol.Optional(
+                CONF_BATTERY_POWER, **_suggested(CONF_BATTERY_POWER)
+            ): _sensor_selector("power"),
+            vol.Optional(
+                CONF_BATTERY_SOC, **_suggested(CONF_BATTERY_SOC)
+            ): _sensor_selector("battery"),
+            vol.Optional(
+                CONF_BATTERY_LIFETIME_CHARGE,
+                **_suggested(CONF_BATTERY_LIFETIME_CHARGE),
+            ): _sensor_selector("energy"),
+            vol.Optional(
+                CONF_BATTERY_LIFETIME_DISCHARGE,
+                **_suggested(CONF_BATTERY_LIFETIME_DISCHARGE),
+            ): _sensor_selector("energy"),
             vol.Required(
                 CONF_INTERVAL_MINUTES,
                 default=defaults.get(CONF_INTERVAL_MINUTES, DEFAULT_INTERVAL_MINUTES),
