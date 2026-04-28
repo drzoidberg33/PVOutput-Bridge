@@ -148,7 +148,7 @@ class PVOutputBridgeCoordinator(DataUpdateCoordinator[UploadResult]):
             return None
 
         return StatusPayload(
-            timestamp=dt_util.now(),
+            timestamp=self._aligned_now(),
             power_generation_w=power_gen_w,
             energy_generation_wh=self._read_converted(
                 options.get(CONF_ENERGY_GENERATION),
@@ -193,6 +193,21 @@ class PVOutputBridgeCoordinator(DataUpdateCoordinator[UploadResult]):
             ),
             cumulative=options.get(CONF_CUMULATIVE, DEFAULT_CUMULATIVE),
             net=options.get(CONF_NET, DEFAULT_NET),
+        )
+
+    def _aligned_now(self) -> datetime:
+        """Floor the current local time to the configured status-interval boundary.
+
+        Uses timedelta subtraction so the date rolls back/forward correctly
+        across midnight — replacing only hour/minute would lose the date shift.
+        PVOutput rejects (or silently re-aligns) non-interval times, and its
+        server-side rounding does not always carry the date with it.
+        """
+        now = dt_util.now()
+        return now - timedelta(
+            minutes=now.minute % self._interval_minutes,
+            seconds=now.second,
+            microseconds=now.microsecond,
         )
 
     def _read_numeric(self, entity_id: str | None) -> float | None:
